@@ -11,11 +11,11 @@ import torch.utils.data as data
 
 def sender_receiver_examples(examples, n_bits, bits_s, bits_r):
     sender_examples = np.copy(examples)
-    sender_examples[:, bits_s:] = 0
+    #sender_examples[:, bits_s:] = 0
     sender_examples = torch.from_numpy(sender_examples)
 
     receiver_examples = np.copy(examples)
-    receiver_examples[:, :n_bits - bits_r] = 0
+    #receiver_examples[:, :n_bits - bits_r] = 0
     receiver_examples = torch.from_numpy(receiver_examples)
 
     examples = torch.from_numpy(examples)
@@ -64,7 +64,7 @@ class _OneHotIterator:
         if self.batches_generated >= self.n_batches_per_epoch:
             raise StopIteration()
 
-        examples = self.random_state.randint(low=0, high=2, size=(self.batch_size, self.n_bits))
+        examples = self.random_state.randint(low=0, high=4, size=(self.batch_size, self.n_bits))
 
         sender_examples, examples, receiver_examples = \
             sender_receiver_examples(examples, self.n_bits, self.bits_s, self.bits_r)
@@ -111,4 +111,3 @@ class UniformLoader(torch.utils.data.DataLoader):
 
     def __iter__(self):
         return iter([self.batch])
-
